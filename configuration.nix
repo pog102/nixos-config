@@ -35,7 +35,8 @@
   # boot.loader.systemd-boot.enable = true;
   # boot.loader.efi.canTouchEfiVariables = true;
 #
-
+# boot.plymouth.enable = true;
+# boot.plymouth.themePackages = true;
   boot.loader = {
         systemd-boot.enable = false;
   efi = {
@@ -96,6 +97,8 @@ networking.hostName = "EpicOs"; # Define your hostname.
    home-manager
 #   btop
 hyprland
+# plymouth
+nixos-bgrt-plymouth
 #   pamixer
 #   zsh
 #   neofetch
