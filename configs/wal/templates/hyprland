@@ -1,0 +1,12 @@
+general {{
+    cursor_inactive_timeout = 4
+    col.active_border = rgba({color13.strip}ee) rgba({color14.strip}ee) 45deg
+    col.inactive_border = rgba(595959aa)
+    layout = dwindle
+}}
+
+decoration {{
+
+   col.shadow = rgba({color5.strip}ee)
+   col.shadow_inactive=rgba({color0.strip}ee)
+}}

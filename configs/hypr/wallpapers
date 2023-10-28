@@ -1,0 +1,2 @@
+$w1 = hyprctl hyprpaper wallpaper "eDP-1,/home/chad/Pictures/ignore/*"
+
