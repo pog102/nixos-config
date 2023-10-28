@@ -32,9 +32,27 @@
      users.chad = import ./home.nix;
   };
   # Bootloader.
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
+  # boot.loader.systemd-boot.enable = true;
+  # boot.loader.efi.canTouchEfiVariables = true;
 #
+
+  boot.loader = {
+        systemd-boot.enable = false;
+  efi = {
+    canTouchEfiVariables = true;
+    efiSysMountPoint = "/boot/efi"; # ← use the same mount point here.
+  };
+  grub = {
+    enable = true;
+    useOSProber = true;
+    # version = 2;
+    # efiInstallAsRemovable = true;
+     efiSupport = true;
+     #efiInstallAsRemovable = true; # in case canTouchEfiVariables doesn't work for your system
+     device = "nodev";
+  # configurationLimit = 3;
+  };
+};
 #networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 networking.hostName = "EpicOs"; # Define your hostname.
 #
