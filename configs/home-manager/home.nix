@@ -1,4 +1,4 @@
-{ config, pkgs,  ... }:
+{ config, pkgs, ... }:
 
 {
   # Home Manager needs a bit of information about you and the paths it should
@@ -22,39 +22,23 @@
   firefox-wayland
   rofi-wayland
   wlsunset
-  pamixer
-  bash
   chafa
   neofetch
-  btop
   pywal
   brillo
   pipewire
   unzip
   bat-extras.batman
   waybar
-  git
-# hyprland
+  # hyprland
   starship
-  wl-clipboard
   foot
   dunst
   zsh
+  zsh
   swww
-killall
-mpv
-papirus-icon-theme
   lsd
 pfetch
-
-      noto-fonts
-      nerdfonts
-      noto-fonts-cjk
-      noto-fonts-emoji
-      font-awesome
-      source-han-sans
-      source-han-sans-japanese
-      source-han-serif-japanese
 
     # # Adds the 'hello' command to your environment. It prints a friendly
     # # "Hello, world!" when run.
@@ -74,41 +58,19 @@ pfetch
     # '')
   ];
 
-#  fonts = {
-#     fonts = with pkgs; [
-#       noto-fonts
-#       nerdfonts
-#       noto-fonts-cjk
-#       noto-fonts-emoji
-#       font-awesome
-#       source-han-sans
-#       source-han-sans-japanese
-#       source-han-serif-japanese
-#     ];
-#     fontconfig = {
-#       enable = true;
-#       defaultFonts = {
-#               monospace = [ "Meslo LG M Regular Nerd Font Complete Mono" ];
-#               serif = [ "Noto Serif" "Source Han Serif" ];
-#               sansSerif = [ "Noto Sans" "Source Han Sans" ];
-#       };
-#     };
-#   };
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
-
-    fonts.fontconfig = {
-      enable = true;
-      # defaultFonts = {
-      #         monospace = [ "Meslo LG M Regular Nerd Font Complete Mono" ];
-      #         serif = [ "Noto Serif" "Source Han Serif" ];
-      #         sansSerif = [ "Noto Sans" "Source Han Sans" ];
-      # };
-    };
   # plain files is through 'home.file'.
-  home.file.".config/" = {
-    recursive = true;
-    source = ./configs;
+  home.file = {
+    # # Building this configuration will create a copy of 'dotfiles/screenrc' in
+    # # the Nix store. Activating the configuration will then make '~/.screenrc' a
+    # # symlink to the Nix store copy.
+    # ".screenrc".source = dotfiles/screenrc;
 
+    # # You can also set the file content immediately.
+    # ".gradle/gradle.properties".text = ''
+    #   org.gradle.console=verbose
+    #   org.gradle.daemon.idletimeout=3600000
+    # '';
   };
   programs.starship = {
     enable = true;
@@ -130,20 +92,20 @@ pfetch
     #   }
     # ];
   };
-  #  wayland.windowManager.hyprland = {
-  #   # Whether to enable Hyprland wayland compositor
-  #   enable = true;
-  #   # The hyprland package to use
-  #   package = pkgs.hyprland;
-  #   # Whether to enable XWayland
-  #   xwayland.enable = true;
-  #
-  #   # Optional
-  #   # Whether to enable hyprland-session.target on hyprland startup
-  #   systemd.enable = false;
-  #   # Whether to enable patching wlroots for better Nvidia support
-  #   enableNvidiaPatches = true;
-  # };
+   wayland.windowManager.hyprland = {
+    # Whether to enable Hyprland wayland compositor
+    enable = true;
+    # The hyprland package to use
+    package = pkgs.hyprland;
+    # Whether to enable XWayland
+    xwayland.enable = true;
+
+    # Optional
+    # Whether to enable hyprland-session.target on hyprland startup
+    systemd.enable = false;
+    # Whether to enable patching wlroots for better Nvidia support
+    enableNvidiaPatches = true;
+  };
   # ...
   # You can also manage environment variables but you will have to manually
   # source
@@ -156,19 +118,7 @@ pfetch
   #
   # if you don't want to manage your shell through Home Manager.
   home.sessionVariables = {
-     EDITOR = "nvim";
-    BROWSER = "firefox";
-    CM_LAUNCHER = "rofi"; # Clipmenu
-  };
- programs.git = {
-    enable = true;
-    userName  = "Ernestas Damanskis";
-    userEmail = "ernestasdamanskis@gmail.com.com";
-    extraConfig = {
-      credential.helper = "${
-          pkgs.git.override { withLibsecret = true; }
-        }/bin/git-credential-libsecret";
-    };
+     EDITOR = "neovim";
   };
 
   programs.zsh = {
@@ -176,25 +126,19 @@ pfetch
     shellAliases = {
       n = "nvim";
       ls = "lsd";
-      up = "nix-channel --update && home-manager switch";
+          up = "nix-channel --update && home-manager switch";
     };
     enableCompletion = true;
     enableAutosuggestions = true;
-    profileExtra = ''
-    if [[ -z $DISPLAY ]] && [[ $(tty) = /dev/tty1 ]]; then  Hyprland; fi
-    '';
      syntaxHighlighting.enable = true;
-      initExtra  = ''
-      export PATH=$HOME/.bin:$PATH
-      autoload -U compinit
-      zstyle ':completion:*' menu select
-      zmodload zsh/complist
-      compinit
-      _comp_options+=(globdots)		# Include hidden files.
-      
-      cat ~/.cache/wal/sequences
-      autoload -U colors && colors
-     '';
+    # interactiveShellInit = ''
+    #   # z - jump around
+    #   source ${pkgs.fetchurl {url = "https://github.com/rupa/z/raw/2ebe419ae18316c5597dd5fb84b5d8595ff1dde9/z.sh"; sha256 = "0ywpgk3ksjq7g30bqbhl9znz3jh6jfg8lxnbdbaiipzgsy41vi10";}}
+    #   export ZSH=${pkgs.oh-my-zsh}/share/oh-my-zsh
+    #   export ZSH_THEME="lambda"
+    #   plugins=(git)
+    #   source $ZSH/oh-my-zsh.sh
+    # '';
   };
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
