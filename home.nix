@@ -34,18 +34,20 @@
   bat-extras.batman
   waybar
   git
-# hyprland
+  transmission
+  fzf
+  mpd
   starship
   wl-clipboard
   foot
   dunst
   zsh
   swww
-killall
-mpv
-papirus-icon-theme
+  killall
+  mpv
+  papirus-icon-theme
   lsd
-pfetch
+  neofetch
 
       noto-fonts
       nerdfonts
@@ -75,7 +77,7 @@ pfetch
   ];
 programs.firefox = {
 
-  enable = true;
+  enable = false;
   profiles.nix = {
   bookmarks = [
     {
@@ -392,12 +394,21 @@ darkreader
       #         sansSerif = [ "Noto Sans" "Source Han Sans" ];
       # };
     };
-  # plain files is through 'home.file'.
+
+
+
+  # home.file.".local/" = {
+  #   recursive = true;
+  #   source = ./icon;
+  # };
+
   home.file.".config/" = {
     recursive = true;
     source = ./configs;
 
   };
+
+
   programs.starship = {
     enable = true;
     enableZshIntegration = true;
@@ -469,6 +480,10 @@ darkreader
     enableCompletion = true;
     enableAutosuggestions = true;
     profileExtra = ''
+    export __NV_PRIME_RENDER_OFFLOAD=1
+    export __NV_PRIME_RENDER_OFFLOAD_PROVIDER=NVIDIA-G0
+    export __GLX_VENDOR_LIBRARY_NAME=nvidia
+    export __VK_LAYER_NV_optimus=NVIDIA_only
     if [[ -z $DISPLAY ]] && [[ $(tty) = /dev/tty1 ]]; then  Hyprland; fi
     '';
      syntaxHighlighting.enable = true;

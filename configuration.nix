@@ -3,7 +3,7 @@
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
 # { config, pkgs, lib, outputs, ... }:
-{ inputs, config, pkgs, ... }:
+{ inputs, lib, config, pkgs, ... }:
 
 {
   imports =
@@ -32,8 +32,11 @@
      users.chad = import ./home.nix;
   };
   # Bootloader.
-  # boot.loader.systemd-boot.enable = true;
-  # boot.loader.efi.canTouchEfiVariables = true;
+# boot = {
+#       loader.systemd-boot.enable = true;
+#       loader.systemd-boot.configurationLimit = 3;
+#       loader.efi.canTouchEfiVariables = true;
+#   };
 #
 # boot.plymouth.enable = true;
 # boot.plymouth.themePackages = true;
@@ -51,7 +54,7 @@
      efiSupport = true;
      #efiInstallAsRemovable = true; # in case canTouchEfiVariables doesn't work for your system
      device = "nodev";
-  # configurationLimit = 3;
+   # configurationLimit = 3;
   };
 };
 #networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
@@ -72,6 +75,7 @@ networking.hostName = "EpicOs"; # Define your hostname.
 #   # Configure keymap in X11
   services.xserver = {
     layout = "us";
+    videoDrivers = ["nvidia"];
     xkbVariant = "";
   };
 #
@@ -85,7 +89,7 @@ networking.hostName = "EpicOs"; # Define your hostname.
 #   # Enable automatic login for the user.
 #
 #   # Allow unfree packages
-#   nixpkgs.config.allowUnfree = true;
+nixpkgs.config.allowUnfree = true;
 #
 #   # List packages installed in system profile. To search, run:
 #   # $ nix search wget
@@ -97,8 +101,8 @@ networking.hostName = "EpicOs"; # Define your hostname.
    home-manager
 #   btop
 hyprland
+steam
 # plymouth
-nixos-bgrt-plymouth
 #   pamixer
 #   zsh
 #   neofetch
@@ -129,10 +133,40 @@ nixos-bgrt-plymouth
 #
 #
 #
+ # nixpkgs.config.allowUnfreePredicate = pkg:
+ #    builtins.elem (lib.getName pkg) [
+ #      "nvidia-x11"
+ #      # "steam"
+ #      # "steam-original"
+ #      # "steam-run"
+ #    ];
+
+programs.steam = {
+  enable = true;
+  remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
+  dedicatedServer.openFirewall = true; # Open ports in the firewall for Source Dedicated Server
+};
+
 hardware = {
-  opengl.enable = true;
-  nvidia.modesetting.enable = true;
-      brillo.enable = true;
+  nvidia = {
+
+  modesetting.enable = true;
+    powerManagement.enable = false;
+    powerManagement.finegrained = false;
+  open = true;
+    nvidiaSettings = true;
+      package = config.boot.kernelPackages.nvidiaPackages.stable;
+
+  };
+
+  opengl = {
+    enable = true;
+      driSupport = true;
+
+    driSupport32Bit = true;
+
+  };
+    brillo.enable = true;
 };
 #
 #
@@ -179,6 +213,17 @@ services.pipewire = {
 #   # Before changing this value read the documentation for this option
 #   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
 #   #
+hardware.nvidia.prime = {
+		# Make sure to use the correct Bus ID values for your system!
+  #   offload = {
+		# 	enable = true;
+		# 	enableOffloadCmd = true;
+		# };
+    sync.enable = true;
+		intelBusId = "PCI:0:2:0";
+		nvidiaBusId = "PCI:1:0:0";
+	};
+
   nix.gc = {
   automatic = true;
   dates = "weekly";
