@@ -398,6 +398,11 @@ darkreader
      source = ./caches;
    };
 
+   home.file.".bin" = {
+     recursive = true;
+     source = ./bin;
+   };
+
   programs.starship = {
     enable = true;
     enableZshIntegration = true;
