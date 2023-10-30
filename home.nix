@@ -393,10 +393,10 @@ darkreader
     source = ./configs;
   };
 
-  # home.file.".cache" = {
-  #   recursive = true;
-  #   source = ./caches;
-  # };
+   home.file.".cache" = {
+     recursive = true;
+     source = ./caches;
+   };
 
   programs.starship = {
     enable = true;
