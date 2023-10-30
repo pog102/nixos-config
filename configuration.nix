@@ -16,14 +16,15 @@
     ];
   
   programs.zsh.enable = true;
-  networking.networkmanager.enable = true;
+networking.wireless.iwd.enable = true;
+  # networking.networkmanager.enable = true;
   services.getty.autologinUser = "chad";
   
   users.users.chad = {
     isNormalUser = true;
     description = "USRER chad";
     shell = pkgs.zsh;
-    extraGroups = [ "networkmanager" "wheel" "video" ];
+    extraGroups = [ "networkmanager" "wheel" "video" "iwd" ];
     packages = with pkgs; [];
   };
 
