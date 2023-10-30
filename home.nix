@@ -49,6 +49,7 @@
   libnotify
   papirus-icon-theme
   lsd
+  pywal
   neofetch
 
       noto-fonts
@@ -383,10 +384,10 @@ darkreader
   };
 
 
-  home.file.".local/share/icons/custom/" = {
-    recursive = true;
-    source = ./icon;
-  };
+  # home.file.".local/share/icons/custom/" = {
+  #   recursive = true;
+  #   source = ./icon;
+  # };
 
   home.file.".config/" = {
     recursive = true;
