@@ -1,0 +1,24 @@
+wallpaper: "/home/chad/Pictures/cavern-BB263.png_16x9.jpg"
+
+special:
+    background: "#00021C"
+    foreground: "#96a3e8"
+    cursor: "#96a3e8"
+
+colors:
+    color0: "#00021C"
+    color1: "#0E2399"
+    color2: "#142BAC"
+    color3: "#2339B6"
+    color4: "#1D36C1"
+    color5: "#233CC6"
+    color6: "#3049D3"
+    color7: "#96a3e8"
+    color8: "#6972a2"
+    color9: "#0E2399"
+    color10: "#142BAC"
+    color11: "#2339B6"
+    color12: "#1D36C1"
+    color13: "#233CC6"
+    color14: "#3049D3"
+    color15: "#96a3e8"

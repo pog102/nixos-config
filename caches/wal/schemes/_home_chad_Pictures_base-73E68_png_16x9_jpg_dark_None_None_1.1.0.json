@@ -1,0 +1,27 @@
+{
+    "wallpaper": "/home/chad/Pictures/base-73E68.png_16x9.jpg",
+    "alpha": "100",
+    "special": {
+        "background": "#111418",
+        "foreground": "#b7b9c6",
+        "cursor": "#b7b9c6"
+    },
+    "colors": {
+        "color0": "#111418",
+        "color1": "#5D617D",
+        "color2": "#5F6481",
+        "color3": "#696D8A",
+        "color4": "#9275C0",
+        "color5": "#7C809D",
+        "color6": "#7F83A0",
+        "color7": "#b7b9c6",
+        "color8": "#80818a",
+        "color9": "#5D617D",
+        "color10": "#5F6481",
+        "color11": "#696D8A",
+        "color12": "#9275C0",
+        "color13": "#7C809D",
+        "color14": "#7F83A0",
+        "color15": "#b7b9c6"
+    }
+}

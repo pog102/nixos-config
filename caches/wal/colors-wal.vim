@@ -1,0 +1,23 @@
+" Special
+let wallpaper  = "/home/chad/Pictures/cavern-BB263.png_16x9.jpg"
+let background = "#00021C"
+let foreground = "#96a3e8"
+let cursor     = "#96a3e8"
+
+" Colors
+let color0  = "#00021C"
+let color1  = "#0E2399"
+let color2  = "#142BAC"
+let color3  = "#2339B6"
+let color4  = "#1D36C1"
+let color5  = "#233CC6"
+let color6  = "#3049D3"
+let color7  = "#96a3e8"
+let color8  = "#6972a2"
+let color9  = "#0E2399"
+let color10 = "#142BAC"
+let color11 = "#2339B6"
+let color12 = "#1D36C1"
+let color13 = "#233CC6"
+let color14 = "#3049D3"
+let color15 = "#96a3e8"

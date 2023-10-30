@@ -1,0 +1,21 @@
+set $wallpaper /home/chad/Pictures/cavern-BB263.png_16x9.jpg
+
+set $background #00021C
+set $foreground #96a3e8
+
+set $color0 #00021C
+set $color1 #0E2399
+set $color2 #142BAC
+set $color3 #2339B6
+set $color4 #1D36C1
+set $color5 #233CC6
+set $color6 #3049D3
+set $color7 #96a3e8
+set $color8 #6972a2
+set $color9 #0E2399
+set $color10 #142BAC
+set $color11 #2339B6
+set $color12 #1D36C1
+set $color13 #233CC6
+set $color14 #3049D3
+set $color15 #96a3e8

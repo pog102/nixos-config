@@ -382,10 +382,6 @@ darkreader
     source = ./Pictures;
   };
 
-  # home.file."wall" = {
-  #   recursive = true;
-  #   source = ./Pics;
-  # };
 
   home.file.".local/share/icons/custom/" = {
     recursive = true;
@@ -395,9 +391,12 @@ darkreader
   home.file.".config/" = {
     recursive = true;
     source = ./configs;
-
   };
 
+  # home.file.".cache" = {
+  #   recursive = true;
+  #   source = ./caches;
+  # };
 
   programs.starship = {
     enable = true;
@@ -452,7 +451,7 @@ darkreader
  programs.git = {
     enable = true;
     userName  = "Ernestas Damanskis";
-    userEmail = "ernestasdamanskis@gmail.com.com";
+    userEmail = "ernestasdamanskis@gmail.com";
     extraConfig = {
       credential.helper = "${
           pkgs.git.override { withLibsecret = true; }
