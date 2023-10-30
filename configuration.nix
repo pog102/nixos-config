@@ -32,31 +32,67 @@
      users.chad = import ./home.nix;
   };
   # Bootloader.
-# boot = {
-#       loader.systemd-boot.enable = true;
-#       loader.systemd-boot.configurationLimit = 3;
-#       loader.efi.canTouchEfiVariables = true;
-#   };
-#
-# boot.plymouth.enable = true;
-# boot.plymouth.themePackages = true;
-  boot.loader = {
-        systemd-boot.enable = false;
-  efi = {
-    canTouchEfiVariables = true;
-    efiSysMountPoint = "/boot/efi"; # ← use the same mount point here.
-  };
-  grub = {
-    enable = true;
-    useOSProber = true;
-    # version = 2;
-    # efiInstallAsRemovable = true;
-     efiSupport = true;
-     #efiInstallAsRemovable = true; # in case canTouchEfiVariables doesn't work for your system
-     device = "nodev";
-   # configurationLimit = 3;
+
+# power management
+services.tlp = {
+      enable = true;
+      settings = {
+        CPU_SCALING_GOVERNOR_ON_AC = "performance";
+        CPU_SCALING_GOVERNOR_ON_BAT = "powersave";
+
+        CPU_ENERGY_PERF_POLICY_ON_BAT = "power";
+        CPU_ENERGY_PERF_POLICY_ON_AC = "performance";
+
+        CPU_MIN_PERF_ON_AC = 0;
+        CPU_MAX_PERF_ON_AC = 100;
+        CPU_MIN_PERF_ON_BAT = 0;
+        CPU_MAX_PERF_ON_BAT = 30;
+      };
+};
+
+
+specialisation = { 
+   nvidia.configuration = { 
+     # Nvidia Configuration 
+  
+     # Optionally, you may need to select the appropriate driver version for your specific GPU. 
+     hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.stable; 
+  
+     # nvidia-drm.modeset=1 is required for some wayland compositors, e.g. sway 
+  
+     hardware.nvidia.prime = { 
+       sync.enable = true; 
+  
+
+		intelBusId = "PCI:0:2:0";
+		nvidiaBusId = "PCI:1:0:0";
+     };
   };
 };
+
+
+ boot = {
+       loader.systemd-boot.enable = true;
+       loader.systemd-boot.configurationLimit = 3;
+       loader.efi.canTouchEfiVariables = true;
+   };
+#
+#  boot.loader = {
+#  efi = {
+#    canTouchEfiVariables = true;
+#    efiSysMountPoint = "/boot/efi"; # ← use the same mount point here.
+#  };
+#  grub = {
+#    enable = true;
+#    useOSProber = true;
+#    # version = 2;
+#    # efiInstallAsRemovable = true;
+#     efiSupport = true;
+#     #efiInstallAsRemovable = true; # in case canTouchEfiVariables doesn't work for your system
+#     device = "nodev";
+#   # configurationLimit = 3;
+#  };
+#};
 #networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 networking.hostName = "EpicOs"; # Define your hostname.
 #
@@ -213,16 +249,6 @@ services.pipewire = {
 #   # Before changing this value read the documentation for this option
 #   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
 #   #
-hardware.nvidia.prime = {
-		# Make sure to use the correct Bus ID values for your system!
-  #   offload = {
-		# 	enable = true;
-		# 	enableOffloadCmd = true;
-		# };
-    sync.enable = true;
-		intelBusId = "PCI:0:2:0";
-		nvidiaBusId = "PCI:1:0:0";
-	};
 
   nix.gc = {
   automatic = true;
@@ -238,8 +264,8 @@ hardware.nvidia.prime = {
 #   };
 #       # upower.enable = true;
 #   # System Upgrades
-  system.autoUpgrade.enable = true;
-  system.autoUpgrade.allowReboot = true;
+  # system.autoUpgrade.enable = true;
+#  system.autoUpgrade.allowReboot = true;
 #
   system.stateVersion = "23.05"; # Did you read the comment?
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
