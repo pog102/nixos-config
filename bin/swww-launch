@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+swww init
+swww img "$(< "${HOME}/.cache/wal/wal")" --transition-type grow --transition-pos top-right
+# sww img "$HOME/steam/output_image.png" --transition-type grow --transition-pos top-right

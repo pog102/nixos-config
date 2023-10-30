@@ -1,0 +1,62 @@
+#!/bin/sh
+
+uevents="/sys/class/power_supply/*/uevent"
+
+batt ()
+{
+  
+    if  [ "$1" = "Charging" ]; then
+        icon_battery=""
+    elif  [ "$2" -eq 100 ]; then
+        icon_battery=""
+        dunstify " Full chage" -t 5100 -r 6 
+    elif [ "$2" -ge 90 ]; then
+        icon_battery=""
+    elif [ "$2" -ge 80 ]; then
+        icon_battery=""
+    elif [ "$2" -ge 70 ]; then
+        icon_battery=""
+    elif [ "$2" -ge 60 ]; then
+        icon_battery=""
+    elif [ "$2" -ge 50 ]; then
+        icon_battery=""
+    elif [ "$2" -ge 40 ]; then
+        icon_battery=""
+    elif [ "$2" -ge 30 ]; then
+        icon_battery=""
+    elif [ "$2" -ge 20 ]; then
+        icon_battery=""
+    elif [ "$2" -ge 10 ]; then
+        icon_battery=""
+    else
+        icon_battery=""
+    fi
+    echo "$icon_battery $2%"
+}
+cases ()
+{
+  case "$3" in
+    "BAT1") batt "$1" "$2"
+    ;;
+    *"ps-controller-battery"*) echo "controller $2%" 
+    ;;
+    *) echo "mousey $3"
+    ;;
+  esac
+  
+}
+ counter=false
+ for k in $uevents
+ do
+if  $counter; then
+          # awk -F '=' -v name="$1" -v status="$2" -v percent="$3" '/POWER_SUPPLY_NAME=|POWER_SUPPLY_CAPACITY=|POWER_SUPPLY_STATUS=/ {print $2}' "$k"
+          # batt $status $percent
+            name=$(awk -F '=' '/POWER_SUPPLY_NAME=/ {print $2}' "$k")
+        capacity=$(awk -F '=' '/POWER_SUPPLY_CAPACITY=/ {print $2}' "$k")
+        status=$(awk -F '=' '/POWER_SUPPLY_STATUS=/ {print $2}' "$k")
+        
+        cases "$status" "$capacity" "$name"
+        # echo "$status $capacity"
+fi
+counter=true
+done

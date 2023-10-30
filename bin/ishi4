@@ -1,0 +1,45 @@
+#!/bin/sh
+pgrep -x transmission-daemon > /dev/null || transmission-daemon
+
+download_dir="$HOME/anime" #download directory
+ani_folder=$HOME/.config/nyaa #folder ##change here
+
+ani_list="$ani_folder/config2" #anime list
+progress="$ani_folder/progress" #anime progress directory
+##Creating directories and a file
+[ ! -d "$ani_folder" ] && mkdir -p "$ani_folder"
+[ ! -d "$download_dir" ] && mkdir -p "$download_dir"
+[ ! -f "$ani_list" ] && touch "$ani_list" && echo "add some anime in the $ani_list" && exit
+[ ! -f "$progress" ] && touch "$progress"
+
+# while read -r line;
+# grep -v '^/' "$ani_list" | while read -r line; 
+grep -v '^/' < "$ani_list" | while read -r line; 
+do
+
+      season=$(echo "$line" | cut -d';' -f2)
+      line=$(echo "$line" | cut -d';' -f1)
+      echo "--------------------------------------"
+      echo "checking $line"
+      [ ! -d "$download_dir/$line/Season $season" ] && mkdir -p "$download_dir/$line/Season $season"
+    current_ep=$(grep "$line" "$progress" | awk -F "#" '{print $2}')
+    [ -z "$current_ep" ] && current_ep=0
+   query2=$(printf '%s' "$line" | tr ' ' '+' ) # query for nyaa.si
+    # i=0
+      mag="p"
+      while [ -n "$mag" ]
+      do
+        current_ep=$((current_ep + 1))
+        mag=$(curl -s "https://nyaa.si/?page=rss&q=$query2+$(printf %02d $current_ep)+1080p&s=seeders&o=desc" | grep -Po '<nyaa:infoHash>.*?</nyaa:infoHash>' |
+        sed 's#<nyaa:infoHash>##g; s#<\/nyaa:infoHash>##g;' | tail -1)  #finds torrent info hash
+        [ -n "$mag" ] && transmission-remote -U -w "$download_dir/$line/Season $season" --add "magnet:?xt=urn:btih:$mag" > /dev/null && echo "found episode $current_ep" #&& current_ep=$((current_ep+1))
+      done
+   if grep -q "$line" "$progress"
+      then
+        sed -i "s/$line.*/$line #$((current_ep-1))/g"  "$progress" #updates progress
+      else
+        echo "$line #$((current_ep-1))" >> "$progress" #adds a new anime entry to progress
+      fi
+      # [ "$total_ep" -eq "$next_ep" ] && sed -i "s/$anime_entry.*//g; /^$/d" "$ani_list" #removes anime entry from the list
+done #< "$ani_list"
+echo "--------------------------------------"

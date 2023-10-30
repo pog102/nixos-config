@@ -1,0 +1,17 @@
+#!/bin/bash
+path="$HOME/.cache/wet.txt"
+[[ -f "$path" ]] || touch $path
+location=$(cat $path)
+
+case "$location" in
+  "Kaunas") echo "" > $path
+  ;;
+  "") echo "Kaunas" > $path
+  ;;
+  *) echo "" > $path
+  ;;
+esac
+pkill -SIGRTMIN+8 "waybar"
+
+
+

@@ -1,0 +1,23 @@
+#!/bin/sh
+# Simple script to output battery level formatted for polybar
+
+battery="/sys/class/power_supply/BAT1"
+
+percent=$(cat "$battery/capacity")  # battery percentage
+    status="$(cat "$battery/status")"   # battery status
+    if  [ "$percent" -eq 100 ]; then
+        icon_battery=" "
+        notify-send -i battery "Battery Charged" "Battery is fully charged" -t 5100 -r 6
+    elif [ "$percent" -ge 90 ]; then
+        icon_battery=" "
+    elif [ "$percent" -ge 40 ]; then
+        icon_battery=" "
+    elif [ "$percent" -ge 10 ]; then
+        icon_battery=" "
+    else
+        icon_battery=" "
+	# [ "$status" != "Charging" ] && dunstify " Battery is getting low" -t 5100 -r 6 && sleep 1 && dunstify " Battery is getting low" -t 5100 -r 6
+	[ "$status" != "Charging" ] && notify-send -i battery-a "Low Battery" "$percent% of battery remaining" -t 5100 -r 6
+    fi
+    [ "$status" = "Charging" ] && stat=""
+echo "$stat$icon_battery $percent% "

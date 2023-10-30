@@ -13,7 +13,7 @@
   # You should not change this value, even if you update Home Manager. If you do
   # want to update the value, then make sure to first check the Home Manager
   # release notes.
-  home.stateVersion = "22.11"; # Please read the comment before changing.
+  home.stateVersion = "23.11"; # Please read the comment before changing.
 
   # The home.packages option allows you to install Nix packages into your
   # environment.
@@ -33,7 +33,7 @@
   unzip
   bat-extras.batman
   waybar
- git
+  git
   transmission
   fzf
   mpd
@@ -45,6 +45,8 @@
   swww
   killall
   mpv
+  imv
+  libnotify
   papirus-icon-theme
   lsd
   neofetch
@@ -364,27 +366,6 @@ darkreader
       ];
   };
 };
-#  fonts = {
-#     fonts = with pkgs; [
-#       noto-fonts
-#       nerdfonts
-#       noto-fonts-cjk
-#       noto-fonts-emoji
-#       font-awesome
-#       source-han-sans
-#       source-han-sans-japanese
-#       source-han-serif-japanese
-#     ];
-#     fontconfig = {
-#       enable = true;
-#       defaultFonts = {
-#               monospace = [ "Meslo LG M Regular Nerd Font Complete Mono" ];
-#               serif = [ "Noto Serif" "Source Han Serif" ];
-#               sansSerif = [ "Noto Sans" "Source Han Sans" ];
-#       };
-#     };
-#   };
-  # Home Manager is pretty good at managing dotfiles. The primary way to manage
 
     fonts.fontconfig = {
       enable = true;
@@ -396,11 +377,20 @@ darkreader
     };
 
 
+  home.file."Pictures" = {
+    recursive = true;
+    source = ./Pictures;
+  };
 
-  # home.file.".local/" = {
+  # home.file."wall" = {
   #   recursive = true;
-  #   source = ./icon;
+  #   source = ./Pics;
   # };
+
+  home.file.".local/share/icons/custom/" = {
+    recursive = true;
+    source = ./icon;
+  };
 
   home.file.".config/" = {
     recursive = true;

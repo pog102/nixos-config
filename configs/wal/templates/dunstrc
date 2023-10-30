@@ -36,7 +36,7 @@
     icons_position = Left
     max_icon_size = 77
     #icon_size = 33
-    icon_path = /home/chad/.local/share/icons/
+    icon_path = /home/chad/.local/share/icons/custom/
     word_wrap = yes
     ellipsize = end
     origin = top-center

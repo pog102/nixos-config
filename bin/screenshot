@@ -1,0 +1,33 @@
+#!/bin/sh
+screenshotdir=~/Pictures/screenshots
+# file name
+file=$screenshotdir/$(date '+%y%m%d-%H%M-%S').png
+# icon for notification
+# icon=~/Rofi-Scripts/rofi/screenshot/camera.png
+# rofi config
+# roficonfig=~/.config/rofi/themes/screenshot.rasi
+#make sure you have directory
+[ -d "$screenshotdir" ] || mkdir -pv "$screenshotdir"
+area=""
+# cwin=""
+full=""
+# copy=""
+# save=""
+
+rofiopt="$full\n$area"
+rofi=$(printf "$rofiopt" | rofi -theme screenshot -dmenu -i )
+# [ -z "$rofi" ] && exit
+case $rofi in
+	"$area")
+	# notify-send -i $icon --urgency low 'Select Area'
+	# maim -u -m 5 -s | xclip -selection clipboard -t image/png && notify-send -i $icon --urgency low 'Screenshot copied' || notify-send -i $icon 'failed to take screenshot'
+  
+  grim -g "$(slurp)" $file &&  wl-copy < $file && notify-send -i $file --urgency low 'Screenshot Taken' 
+	;;
+	"$full")
+	# maim -u -m 5 $file && notify-send -i $icon --urgency low 'Screenshot Taken' || notify-send -i $icon 'failed to take screenshot'
+  grim $file && wl-copy < $file && notify-send -i $file --urgency low 'Screenshot Taken'
+	;;
+*) exit
+  ;;
+esac

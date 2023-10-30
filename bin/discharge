@@ -1,0 +1,14 @@
+#!/bin/sh
+export DISPLAY=:0
+# export XDG_RUNTIME_DIR=/tmp/wayland
+# export WAYLAND_DISPLAY=wayland-0
+# export $(dbus-launch)
+export DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus
+case "$1" in
+ "ps-controller-battery-4c:b9:9b:33:02:fe"|"Wireless Controller") notify-send -u low -i "play" "Wireless Controller" "is at ${2}%"
+  ;;
+  "Corsair CORSAIR KATAR PRO Wireless Gaming Dongle") notify-send -u low -i "cor" "$1" "is at ${2}%"
+  ;;
+  "BAT1") notify-send -u critical -i battery-empty "Battery status" "Battery level is CRITICAL at ${2}%"
+  ;;
+esac

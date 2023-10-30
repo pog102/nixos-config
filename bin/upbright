@@ -1,0 +1,16 @@
+#!/bin/sh
+# Description: Script to get current volume
+brillo -q -$1 1
+polybar-msg action "#brillo.hook.0"
+
+brightness=$(printf "%.0f\n" $(brillo -G))
+if [ "$brightness" -gt 70 ]; then
+	icon="sun"
+elif [ "$brightness" -gt 45 ]; then
+	icon="sun_half"
+#elif [  "$brightness" -gt 25  ]; then
+#	icon="sun_low"
+else
+	icon="sun_emp"
+fi
+	dunstify -a "mediakeys" -u low -r 50 -h int:value:"$brightness" -i "$icon" "$brightness%" -t 1100
