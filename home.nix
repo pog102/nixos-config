@@ -96,7 +96,7 @@
   };
 programs.firefox = {
 
-  enable = false;
+  enable = true;
   profiles.nix = {
   bookmarks = [
     {
