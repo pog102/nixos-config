@@ -137,7 +137,7 @@ nixpkgs.config.allowUnfree = true;
 #   neovim
    home-manager
 #   btop
-hyprland
+# hyprland
 steam
 # plymouth
 #   pamixer
