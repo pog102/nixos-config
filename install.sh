@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# [ ! -d "$HOME/.cache/wal" ] && ln -s $PWD/cache ~/.cache/
+#wha [ ! -d "$HOME/.cache/wal" ] && ln -s $PWD/cache ~/.cache/
 [ ! -d "$HOME/.cache/wal" ] && cp $PWD/cache ~/.cache/
 [ ! -d "$HOME/.config/" ] && ln -s $PWD/config ~/.config
 [ ! -d "$HOME/Pictures" ] && ln -s $PWD/Pictures ~/Pictures
