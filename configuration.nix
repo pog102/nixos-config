@@ -17,14 +17,14 @@
   
   programs.zsh.enable = true;
 networking.wireless.iwd.enable = true;
-  # networking.networkmanager.enable = true;
+ # networking.networkmanager.enable = true;
   services.getty.autologinUser = "chad";
   
   users.users.chad = {
     isNormalUser = true;
     description = "USRER chad";
     shell = pkgs.zsh;
-    extraGroups = [ "networkmanager" "wheel" "video" "iwd" ];
+    extraGroups = [ "networkmanager" "wheel" "video" ];
     packages = with pkgs; [];
   };
 
@@ -33,10 +33,14 @@ networking.wireless.iwd.enable = true;
      users.chad = import ./home.nix;
   };
   # Bootloader.
+# services.xserver.enable = true;
+# services.xserver.displayManager.sddm.enable = true;
+# services.xserver.desktopManager.plasma5.enable = true;
+# services.xserver.displayManager.defaultSession = "plasmawayland";
 
 # power management
 services.tlp = {
-      enable = true;
+      enable = false;
       settings = {
         CPU_SCALING_GOVERNOR_ON_AC = "performance";
         CPU_SCALING_GOVERNOR_ON_BAT = "powersave";
@@ -57,9 +61,9 @@ specialisation = {
      # Nvidia Configuration 
   
      # Optionally, you may need to select the appropriate driver version for your specific GPU. 
-     hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.stable; 
+     # hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.stable; 
   
-     # nvidia-drm.modeset=1 is required for some wayland compositors, e.g. sway 
+     #nvidia-drm.modeset=1; # is required for some wayland compositors, e.g. sway 
   
      hardware.nvidia.prime = { 
        sync.enable = true; 
@@ -72,28 +76,28 @@ specialisation = {
 };
 
 
- boot = {
-       loader.systemd-boot.enable = true;
-       loader.systemd-boot.configurationLimit = 3;
-       loader.efi.canTouchEfiVariables = true;
-   };
-#
-#  boot.loader = {
-#  efi = {
-#    canTouchEfiVariables = true;
-#    efiSysMountPoint = "/boot/efi"; # ← use the same mount point here.
-#  };
-#  grub = {
-#    enable = true;
-#    useOSProber = true;
-#    # version = 2;
-#    # efiInstallAsRemovable = true;
-#     efiSupport = true;
-#     #efiInstallAsRemovable = true; # in case canTouchEfiVariables doesn't work for your system
-#     device = "nodev";
-#   # configurationLimit = 3;
-#  };
-#};
+# boot = {
+#       loader.systemd-boot.enable = true;
+#       #loader.systemd-boot.configurationLimit = 3;
+#       loader.efi.canTouchEfiVariables = true;
+#   };
+
+  boot.loader = {
+  efi = {
+    canTouchEfiVariables = true;
+    efiSysMountPoint = "/boot/efi"; # ← use the same mount point here.
+  };
+  grub = {
+    enable = true;
+    useOSProber = true;
+    # version = 2;
+    # efiInstallAsRemovable = true;
+     efiSupport = true;
+     #efiInstallAsRemovable = true; # in case canTouchEfiVariables doesn't work for your system
+     device = "nodev";
+    configurationLimit = 3;
+  };
+};
 #networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 networking.hostName = "EpicOs"; # Define your hostname.
 #
@@ -131,13 +135,16 @@ nixpkgs.config.allowUnfree = true;
 #   # List packages installed in system profile. To search, run:
 #   # $ nix search wget
 # # waybar
+# environment.systemPackages = pkgs-stable.foot;
   environment.systemPackages = with pkgs; [
 #   #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
 #   #  wget
 #   neovim
    home-manager
 #   btop
-# hyprland
+ hyprland
+foot
+git
 steam
 # plymouth
 #   pamixer
@@ -177,6 +184,11 @@ steam
  #      # "steam-original"
  #      # "steam-run"
  #    ];
+programs.hyprland = {
+enable = true;
+xwayland.enable = true;
+    # enableNvidiaPatches = true;
+};
 
 programs.steam = {
   enable = true;
@@ -265,7 +277,7 @@ services.pipewire = {
 #   };
 #       # upower.enable = true;
 #   # System Upgrades
-  # system.autoUpgrade.enable = true;
+ system.autoUpgrade.enable = true;
 #  system.autoUpgrade.allowReboot = true;
 #
   system.stateVersion = "23.05"; # Did you read the comment?

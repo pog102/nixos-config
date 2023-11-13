@@ -1,5 +1,5 @@
 { config, inputs, pkgs,  ... }:
-
+with config.lib;
 {
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
@@ -13,6 +13,7 @@
   # You should not change this value, even if you update Home Manager. If you do
   # want to update the value, then make sure to first check the Home Manager
   # release notes.
+  # home.stateVersion = "23.05"; # Please read the comment before changing.
   home.stateVersion = "23.11"; # Please read the comment before changing.
 
   # The home.packages option allows you to install Nix packages into your
@@ -22,6 +23,7 @@
   firefox-wayland
   rofi-wayland
   wlsunset
+  ripgrep
   pamixer
   bash
   chafa
@@ -33,13 +35,13 @@
   unzip
   bat-extras.batman
   waybar
-  git
+  # git
   transmission
   fzf
   mpd
   starship
   wl-clipboard
-  foot
+  # foot
   dunst
   zsh
   swww
@@ -49,7 +51,6 @@
   libnotify
   papirus-icon-theme
   lsd
-  hyprland
   transmission
   pywal
   neofetch
@@ -80,23 +81,9 @@
     #   echo "Hello, ${config.home.username}!"
     # '')
   ];
-  wayland.windowManager.hyprland = {
-    # Whether to enable Hyprland wayland compositor
-    enable = true;
-    # The hyprland package to use
-    # package = pkgs.hyprland;
-    # Whether to enable XWayland
-    xwayland.enable = true;
-
-    # Optional
-    # Whether to enable hyprland-session.target on hyprland startup
-    systemd.enable = false;
-    # Whether to enable patching wlroots for better Nvidia support
-    enableNvidiaPatches = true;
-  };
 programs.firefox = {
 
-  enable = true;
+  enable = false;
   profiles.nix = {
   bookmarks = [
     {
@@ -394,31 +381,33 @@ darkreader
     };
 
 
-  home.file."Pictures" = {
-    recursive = true;
-    source = ./Pictures;
-  };
-
-
-  # home.file.".local/share/icons/custom/" = {
+  # home.file."Pictures" = {
   #   recursive = true;
-  #   source = ./icon;
+  #   source = ./Pictures;
   # };
 
-  home.file.".config/" = {
-    recursive = true;
-    source = ./configs;
-  };
 
-   home.file.".cache" = {
-     recursive = true;
-     source = ./caches;
-   };
 
-   home.file.".bin" = {
-     recursive = true;
-     source = ./bin;
-   };
+  # home.file.".config/" = {
+  #   recursive = true;
+  #   source = ./configs;
+  #   #source = config.lib.file.mkOutOfStoreSymlink ./configs;
+  # };
+
+   # home.file.".cache" = {
+   #   recursive = true;
+   #   source = ./caches;
+   # };
+
+   # home.file.".bin" = {
+   #   recursive = true;
+   #   source = ./bin;
+   # };
+   #
+   # home.file.".local/share/icons/custom" = {
+   #   recursive = true;
+   #   source = ./icon;
+   # };
 
   programs.starship = {
     enable = true;
@@ -470,16 +459,16 @@ darkreader
     BROWSER = "firefox";
     CM_LAUNCHER = "rofi"; # Clipmenu
   };
- programs.git = {
-    enable = true;
-    userName  = "Ernestas Damanskis";
-    userEmail = "ernestasdamanskis@gmail.com";
-    extraConfig = {
-      credential.helper = "${
-          pkgs.git.override { withLibsecret = true; }
-        }/bin/git-credential-libsecret";
-    };
-  };
+ # programs.git = {
+ #    enable = true;
+    # userName  = "Ernestas Damanskis";
+    # userEmail = "ernestasdamanskis@gmail.com";
+    # extraConfig = {
+    #   credential.helper = "${
+    #       pkgs.git.override { withLibsecret = true; }
+    #     }/bin/git-credential-libsecret";
+    # };
+  # };
 
   programs.zsh = {
     enable = true;
@@ -493,7 +482,7 @@ darkreader
     profileExtra = ''
     if [[ -z $DISPLAY ]] && [[ $(tty) = /dev/tty1 ]]; then  Hyprland; fi
     '';
-     syntaxHighlighting.enable = true;
+     # syntaxHighlighting.enable = true;
       initExtra  = ''
       export PATH=$HOME/.bin:$PATH
       autoload -U compinit
